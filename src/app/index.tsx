@@ -1,61 +1,77 @@
-import React, { Component } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React, { useState } from 'react';
+import { StyleSheet, View,Text} from 'react-native';
 import Profile_pic from './profilepic';
+import Navs from './navigations';
+import {CreateModal} from './customs/Modals'
+import { Modal, Provider } from '@ant-design/react-native';
 
+export default function Index() {
+  const [createModalVisible, setCreateModalVisible] = useState(false);
+  
 
-export default class index extends Component {
-  render() {
-    return (
+  return (
+    <Provider>
       <View style={styles.container}>
+        {/* Header */}
         <View style={styles.head_tab}>
-          
           <Profile_pic />
-
-          {/* Content */}
-          <View style={styles.body}>
-            <View style={styles.content} />
-          </View> 
-          
-          
-
-          
         </View>
-        {/* <View style={styles.bottom_container}/> */}
+
+        {/* Body content that will expand */}
+        <View style={styles.body}>
+          <View style={styles.content} />
+        </View>
+
+        {/* Navigation bar Bottom */}
+        <View style={styles.nav_bottom}>
+          {/* Pass the function to open the modal to Navs component */}
+          <Navs onPress={() => setCreateModalVisible(true)} />
+        </View>
+          <CreateModal visible={createModalVisible} onClose={() => setCreateModalVisible(false)} />
+          <View style={styles.modalBody}>
+        </View>
       </View>
-    )
-  }
+    </Provider>
+  );
 }
+
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#EEE5E9',
-        width: '100%',
-        height: '100%',
-    },
-    head_tab: {
-        backgroundColor: '#2B303A',
-        width: '100%',
-        height: '10%', 
-        borderBottomLeftRadius: 10,
-        borderBottomRightRadius: 10,
-    },
-    // bottom_container: {
-    //     backgroundColor: '#2B303A',
-    //     width: '100%',
-    //     height: '15%',
-    //     top: '70%',
-    // },
-    body: {
-        alignItems: 'center',
-        marginTop: 10,
-    },
-    content: {
-        backgroundColor: '#2B303A',
-        width: '90%',
-        height: '200%',
-        margin: 10,
-        borderBottomLeftRadius: 20,
-        borderBottomRightRadius: 20,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-    },
+  container: {
+    flex: 1,
+    backgroundColor: '#EEE5E9',
+    width: '100%',
+  },
+  head_tab: {
+    backgroundColor: '#2B303A',
+    width: '100%',
+    height: '10%',
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+  },
+  body: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  content: {
+    backgroundColor: '#2B303A',
+    width: '90%',
+    marginBottom: 85,
+    borderRadius: 20,
+    height: '85%',
+  },
+  nav_bottom: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    height: 80,
+    backgroundColor: '#2B303A',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  modalBody: {
+    padding: 20,
+    alignItems: 'center',
+  },
 });

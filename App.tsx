@@ -1,19 +1,27 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { Provider } from '@ant-design/react-native';
+import { Slot } from 'expo-router';
+import Navs from './src/app/navigations';
+import {CreateModal} from './src/app/customs/Modals';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
-}
+    const [modalVisible, setModalVisible] = useState(false);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#EEE5E9',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+    // Function to handle opening the modal
+    const handleOpenModal = () => {
+        setModalVisible(true);
+    };
+
+    // Function to handle closing the modal
+    const handleCloseModal = () => {
+        setModalVisible(false);
+    };
+
+    return (
+        <Provider>
+          <Slot />
+          <Navs onPress={handleOpenModal} /> {/* Pass the onPress prop here */}
+          <CreateModal visible={modalVisible} onClose={handleCloseModal} /> {/* Render the modal */}           
+        </Provider>
+    );
+}
